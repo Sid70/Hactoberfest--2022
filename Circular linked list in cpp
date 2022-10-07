@@ -1,0 +1,319 @@
+### Siddhanta Choudhury
+image : https://imgur.com/a/8dnoeGp
+location : india
+github : https://github.com/Sid70
+
+#include<stdio.h>
+#include<stdlib.h>
+
+struct node {
+
+    int data;
+    struct node *next;
+
+} *head = NULL;
+
+struct node *last = NULL;
+
+void createNode();
+void display();
+void insert_At_Beginning();
+void insert_At_End();
+void delete_At_Beginning();
+void delete_At_End();
+void insert_At_Any_Position();
+void delete_At_Any_Position();
+
+int main() {
+
+    puts("1. Create a node");
+    puts("2. display");
+    puts("3. insert at beginning");
+    puts("4. insert at end");
+    puts("5. Insert at any positon");
+    puts("6. Delete at beginning");
+    puts("7. Delete at end");
+    puts("8. Delete at any position");
+    puts("9. Exit");
+
+    int choice;
+
+    while ( 1 )
+    {
+        printf("Enter your choice\n");
+        scanf("%d",&choice);
+
+        switch ( choice )
+        {
+        case 1:
+            {
+                createNode();
+                break;
+            }
+        case 2:
+            {
+                display();
+                break;
+            }
+        case 3:
+            {
+                insert_At_Beginning();
+                break;
+            }
+        case 4:
+            {
+                insert_At_End();
+                break;
+            }
+        case 5:
+            {
+                insert_At_Any_Position();
+                break;
+            }
+        case 6:
+            {
+                delete_At_Beginning();
+                break;
+            }
+        case 7:
+            {
+                delete_At_End();
+                break;
+            }
+        case 8:
+            {
+                delete_At_Any_Position();
+                break;
+            }
+        case 9:
+            {
+                exit(0);
+            }
+        default:
+            {
+                puts("Wrong Choice\n");
+                exit(2);
+                break;
+            }
+        }
+    }
+}
+
+void createNode() {
+
+    struct node *newnode,*temp;
+
+    newnode = ( struct node*) malloc(sizeof( struct node ));
+
+    printf("Enter a data\n");
+    scanf("%d",&newnode->data);
+
+    if ( head == NULL )
+    {
+        head = newnode;
+    }
+    else
+    {
+        temp = head;
+
+        while ( temp->next != head )
+        {
+            temp = temp->next;
+        }
+
+        temp->next = newnode;
+    }
+
+    newnode->next = head;
+    last = newnode;
+}
+
+void display() {
+
+    struct node *temp;
+
+    if ( head == NULL )
+    {
+        printf("linked list is empty\n");
+    }
+
+    else
+    {
+        temp = head;
+        printf("Linked list is\n");
+
+       while ( temp != last )
+       {
+           printf("   %d   ",temp->data);
+           temp = temp->next;
+       }
+
+        printf("   %d   ",temp->data);
+
+        printf("\n");
+    }
+}
+
+void insert_At_Beginning() {
+
+    struct node *newnode;
+
+    newnode = ( struct node*) malloc(sizeof( struct node ));
+
+    printf("Enter a data\n");
+    scanf("%d",&newnode->data);
+
+    if ( head == NULL )
+    {
+        last = newnode;
+        head = last;
+    }
+    else
+    {
+        newnode->next = head;
+        head = newnode;
+    }
+
+    last->next = head;
+}
+
+void insert_At_End() {
+
+    struct node *newnode,*temp;
+
+    newnode = ( struct node*) malloc(sizeof( struct node ));
+
+    printf("Enter a data\n");
+    scanf("%d",&newnode->data);
+
+    if ( head == NULL )
+    {
+        head = newnode;
+    }
+    else
+    {
+        temp = head;
+
+        while ( temp->next != head )
+        {
+            temp = temp->next;
+        }
+
+        temp->next = newnode;
+    }
+
+    newnode->next = head;
+    last = newnode;
+
+}
+
+void delete_At_Beginning() {
+
+    if ( head == NULL )
+    {
+        printf("Deletion is not possible because linked list is empty.\n");
+    }
+    else if ( head == last )
+    {
+        head = NULL;
+        last = NULL;
+    }
+    else
+    {
+        head = head->next;
+        last->next = head;
+    }
+}
+
+void delete_At_End() {
+
+    struct node* temp;
+
+    if ( head == NULL )
+    {
+         printf("Deletion is not possible because linked list is empty.\n");
+    }
+    else if ( head == last )
+    {
+        head = NULL;
+        last = NULL;
+    }
+    else
+    {
+        temp = head;
+
+        while ( temp->next != last )
+        {
+            temp = temp->next;
+        }
+
+        last = temp;
+        last->next = head;
+    }
+}
+
+void insert_At_Any_Position() {
+
+    struct node *newnode,*temp;
+    int pos;
+
+    printf("Enter a position at which you want to insert\n");
+    scanf("%d",&pos);
+
+    if ( head == NULL )
+    {
+        printf("No data found in linked list yet.\n");
+    }
+    else if ( pos == 1 )
+    {
+       insert_At_Beginning();
+    }
+    else
+    {
+
+        newnode = ( struct node*) malloc(sizeof( struct node ));
+
+        printf("Enter a data\n");
+        scanf("%d",&newnode->data);
+
+        temp = head;
+
+        for ( int i = 2 ; i <= pos - 1 ; i++ )
+        {
+            temp = temp->next;
+        }
+
+        newnode->next = temp->next;
+        temp->next = newnode;
+    }
+}
+
+void delete_At_Any_Position() {
+
+
+    struct node* temp;
+    int pos;
+
+    printf("Enter a position at which you want to delete\n");
+    scanf("%d",&pos);
+
+    if ( head == NULL )
+    {
+        printf("Deletion is not possible .\n");
+    }
+    else if ( pos == 1 )
+    {
+       delete_At_Beginning();
+    }
+    else
+    {
+        temp = head;
+
+        for ( int i = 2 ; i <= pos - 1 ; i++ )
+        {
+            temp = temp->next;
+        }
+
+        temp->next = temp->next->next;
+    }
+}
